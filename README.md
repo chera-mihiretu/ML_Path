@@ -4,5 +4,6 @@ This is how I learned numpy
 # Numpy Basics
     ```python
     print('chera')
+    ```
     
 
