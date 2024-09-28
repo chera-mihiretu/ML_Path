@@ -39,7 +39,6 @@ pip install scikit-learn numpy pandas matplotlib kaggle
 ```
 
 You can find the dataset here
-```link
-https://www.kaggle.com/c/digit-recognizer/data
-```
+Kaggle Data: [https://www.kaggle.com/c/digit-recognizer/data](https://www.kaggle.com/c/digit-recognizer/data)
+
 
