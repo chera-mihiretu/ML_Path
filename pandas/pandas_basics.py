@@ -22,7 +22,3 @@ series2 = pd.DataFrame(new_data)
 print(series2)
 
 ######################################################
-
-load_data = pd.read_csv('my_data.csv')
-
-print(load_data)
