@@ -14,20 +14,20 @@ import panda as pd
 After that I Learned the basics of numpy and pandas
 
 
-[Array Creation](numpy/array_basics.py)
-[Array Indexing and Slicing](numpy/2dArray.py)
-[Array Operations](numpy/numpyoperation.py)
-[Universal Functions (ufuncs)](numpy/numpyoperation.py)
-[Statistical Functions](numpy/numpyoperation.py)
-[Linear Algebra](numpy/numpyoperation.py)
-[Random Number Generation](numpy/array_basics.py)
-[Reshaping and Resizing Arrays](numpy/array_reshaping.py)
-[File Input/Output](numpy/numpyio.py)
-[Masked Arrays]()
-[Structured Arrays]()
-[Data Types]()
-[Array Broadcasting]()
-[Fancy Indexing]()
+- [Array Creation](numpy/array_basics.py)
+- [Array Indexing and Slicing](numpy/2dArray.py)
+- [Array Operations](numpy/numpyoperation.py)
+- [Universal Functions (ufuncs)](numpy/numpyoperation.py)
+- [Statistical Functions](numpy/array_functions.py)
+- [Linear Algebra](numpy/numpyoperation.py)
+- [Random Number Generation](numpy/array_basics.py)
+- [Reshaping and Resizing Arrays](numpy/array_reshaping.py)
+- [File Input/Output](numpy/numpyio.py)
+- [Masked Arrays]()
+- [Structured Arrays]()
+- [Data Types](numpy/)
+- [Array Broadcasting](numpy/broadcasting.py)
+- [Fancy Indexing]()
 
 
 # Digit Recognition using Machine Learning
