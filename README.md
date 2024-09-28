@@ -1,9 +1,33 @@
 # This is The Path I Took to learn Machine Learning
-The first thing I had to do was to learn python. Since I know python pretty well I just Continued learning numpy.
-This is how I learned numpy
+The first thing I had to do was to learn python. Since I know python pretty well I just Continued learning numpy and pandas.
+
+So I Started by
+```bash
+pip install numpy pandas
+```
+Then Import Them
+```python
+import numpy as np
+import panda as pd
+```
+
+After that I Learned the basics of numpy and pandas
 
 
-
+[Array Creation](numpy/array_basics.py)
+[Array Indexing and Slicing](numpy/2dArray.py)
+[Array Operations](numpy/numpyoperation.py)
+[Universal Functions (ufuncs)](numpy/numpyoperation.py)
+[Statistical Functions](numpy/numpyoperation.py)
+[Linear Algebra](numpy/numpyoperation.py)
+[Random Number Generation](numpy/array_basics.py)
+[Reshaping and Resizing Arrays](numpy/array_reshaping.py)
+[File Input/Output](numpy/numpyio.py)
+[Masked Arrays]()
+[Structured Arrays]()
+[Data Types]()
+[Array Broadcasting]()
+[Fancy Indexing]()
 
 
 # Digit Recognition using Machine Learning
