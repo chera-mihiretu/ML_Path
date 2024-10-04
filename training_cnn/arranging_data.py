@@ -16,5 +16,5 @@ x_test = x_test.reshape(-1, 28, 28, 1)
 
 
 # converting the label into bit 
-y_train = to_categorical(y_train, num_classes=10)  # Convert labels to one-hot encoding
-y_test = to_categorical(y_test, num_classes=10)
+y_train_bin = to_categorical(y_train, num_classes=10)  # Convert labels to one-hot encoding
+y_test_bin = to_categorical(y_test, num_classes=10)
