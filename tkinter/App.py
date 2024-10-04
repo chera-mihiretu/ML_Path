@@ -4,8 +4,10 @@ from PIL_tutor.main import convertToPixels
 import numpy as np
 from model_setup import *
 from concurrent.futures import ThreadPoolExecutor
+from image_processor import *
 MAIN_CANVA_SIZE = (400,400)
 PAINT_RADIUS = 14
+
 class MyApplication(tk.Tk):
     def __init__(self, title):
         super().__init__()  
@@ -18,8 +20,32 @@ class MyApplication(tk.Tk):
        
         
         self.frame_refresh = 0
-    def drawImage(self, event):
-        pass
+        self.image_processor = ImageProcessor()
+        self.main_canva.bind("<ButtonRelease-1>", self.predictNumberMouseRelease)
+
+    def uploadImage(self):
+        try:
+            image = self.image_processor.uploadImage()  # Assume this returns a PIL Image object
+            photo = ImageTk.PhotoImage(image)
+
+            # Store a reference to avoid garbage collection
+            self.photo_reference = photo  
+            
+            # Clear any previous images on the canvas
+            self.main_canva.delete('all')  # Clear the canvas before adding a new image
+
+            # Add the image to the canvas
+            self.main_canva.create_image(200, 200, image=self.photo_reference)  # Center the image in the canvas
+            self.main_canva.update()
+
+
+            result = self.getTheMatrixFromImage(image)
+
+            self.setPredictionByMatrix(result)
+            
+        except FileExistsError as e:
+            print
+
     def setUpCanvas(self):
         #! Adding The Canvas
         self.main_canva = tk.Canvas(self, width=MAIN_CANVA_SIZE[0], height=MAIN_CANVA_SIZE[1], bg='white')
@@ -31,7 +57,7 @@ class MyApplication(tk.Tk):
         self.frameOfButtons = tk.Frame(self)
         self.clearCanvas = tk.Button(self.frameOfButtons, text='Clear', bg='blue', fg='white', command=self.clear)
         self.useCamer = tk.Button(self.frameOfButtons, text='Use Camera', bg='blue', fg='white')
-        self.uploadImage = tk.Button(self.frameOfButtons, text='Upload Image', bg='blue', fg='white')
+        self.uploadImage = tk.Button(self.frameOfButtons, text='Upload Image', bg='blue', fg='white', command=self.uploadImage)
         
 
         # Adding the Labels
@@ -45,10 +71,10 @@ class MyApplication(tk.Tk):
         self.main_canva.pack(padx=10, pady=10)
 
 
-        self.predictNumberButton.pack(padx=10,pady=10)
-        self.clearCanvas.pack(padx=10, pady=10, side=tk.LEFT)
-
+        self.predictNumberButton.pack(padx=10,pady=10, expand=True, fill=tk.BOTH)
         self.uploadImage.pack(padx=10, pady=10, side=tk.LEFT)
+
+        self.clearCanvas.pack(padx=10, pady=10, side=tk.LEFT)
         self.useCamer.pack(padx=10, pady=10, side=tk.RIGHT)
         self.frameOfButtons.pack()
         self.second_canva.pack()
@@ -63,10 +89,7 @@ class MyApplication(tk.Tk):
         radius = PAINT_RADIUS
         self.main_canva.create_oval(x - radius, y - radius, x + radius, y+radius, fill='black')
         
-        if self.frame_refresh > 60:
-            self.predictNumber()
-            self.frame_refresh = 0
-        self.frame_refresh += 1
+        
 
     def getTheMatrixFromCanvas(self):
         image = Image.new("RGB", (MAIN_CANVA_SIZE[0], MAIN_CANVA_SIZE[1]), "white")
@@ -80,7 +103,10 @@ class MyApplication(tk.Tk):
         image = image.resize((28, 28))
         
         return self.requiredData(image)
-
+    def getTheMatrixFromImage(self, image):
+        image = image.resize((28, 28))
+        
+        return self.requiredData(image)
     def requiredData(self, image):
         data_matrix = convertToPixels(image.getdata())
 
@@ -97,7 +123,11 @@ class MyApplication(tk.Tk):
         
     def predictNumber(self):
         result = self.getTheMatrixFromCanvas()
+        self.setPredictionByMatrix(result)
+    def predictNumberMouseRelease(self, event):
+        self.predictNumber()
 
+    def setPredictionByMatrix(self, result):
         value, percent = self.model.predictNumber(result)
 
         self.second_canva.delete('all')

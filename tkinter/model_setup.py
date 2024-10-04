@@ -7,7 +7,12 @@ import asyncio
 import os
 class MyModel:
     def __init__(self):
-        self.model = load_model(f'{self.getPath()}/training_cnn/digit_recognition_model_02.h5')
+        path = self.getPath()
+        path = path.split('/')
+        if path[-1] == 'tkinter':
+            path.pop()
+        path = '/'.join(path)
+        self.model = load_model(f'{path}/training_cnn/digit_recognition_model_02.h5')
     def getPath(self) -> str:
         return os.getcwd()
     
