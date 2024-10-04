@@ -1,5 +1,5 @@
 import tkinter as tk
-import mss 
+
 from PIL import Image, ImageDraw
 from PIL_tutor.main import convertToPixels
 import numpy as np
@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 
 
 # # Load the trained model
-model = load_model('training_cnn/digit_recognition_model.h5')
+model = load_model('training_cnn/digit_recognition_model_02.h5')
 
 
 
@@ -18,15 +18,21 @@ root = tk.Tk()
 root.title('Digit Recgonition')
 
 size = (400,400)
-
+refresh_rate = 0
 
 
 
 def drawDigit(event):
+    global refresh_rate
     x, y = event.x, event.y
 
     radius = 14
     canvas.create_oval(x - radius, y - radius, x + radius, y+radius, fill='black')
+    refresh_rate += 1
+    if refresh_rate > 60:
+        guessNumber()
+        refresh_rate = 0 
+
 
 def guessNumber():
     
@@ -51,33 +57,47 @@ def guessNumber():
     predicted_digit = np.argmax(predicted_class)
     second_canvas.delete('all')
     drawNumber(predicted_digit)
-
-    canvas.delete("all")
+    confidence = np.max(predicted_class[0]) * 100 
+    percent_label.config(text=f"Predicted Digit: {predicted_digit} with Confidence: {confidence:.2f}%")
+    
     
 
 def drawNumber(number):
-
     # Draw the number on the canvas at coordinates (100, 100)
     second_canvas.create_text(100, 100, text=number, font=("Helvetica", 48), fill="black")
 
-# first Canvas
+
+def clear_canvas():
+    canvas.delete("all")
+
+
+
+#! first Canvas
 canvas = tk.Canvas(root, width=size[0], height=size[1], bg='white')
 canvas.pack()
 
-# the button
-button = tk.Button(root, text='Guess Number', command=guessNumber)
+#! the button
+button = tk.Button(root, text='Predict Number', command=guessNumber)
 button.pack()
 
-# Second Canvas for drawing the guessed number
+#! the button
+button = tk.Button(root, text='Clear', command=clear_canvas)
+button.pack()
+
+#! Second Canvas for drawing the guessed number
 second_canvas = tk.Canvas(root, width=size[0]//2, height=size[1]//2, bg='white')
 
 second_canvas.pack()
 
-# adding infomration about the second canva
+#! adding infomration about the second canva
 label = tk.Label(root, text="Here You will see guessed number!", font=("Arial", 16), fg="black")
 label.pack(pady=20) 
 
-# Binding the first canvas with mouse
+#! Label for percentage
+percent_label = tk.Label(root, text="Here You will see percentage of prediction!", font=("Arial", 10), fg="black")
+percent_label.pack(pady=20) 
+
+#! Binding the first canvas with mouse
 canvas.bind('<B1-Motion>', drawDigit)
 
 
