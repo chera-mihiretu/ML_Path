@@ -2,6 +2,16 @@ import tkinter as tk
 import mss 
 from PIL import Image, ImageDraw
 from PIL_tutor.main import convertToPixels
+import numpy as np
+from tensorflow.keras.models import load_model
+
+
+
+# # Load the trained model
+model = load_model('training_cnn/digit_recognition_model.h5')
+
+
+
 root = tk.Tk()
 
 
@@ -15,7 +25,7 @@ size = (400,400)
 def drawDigit(event):
     x, y = event.x, event.y
 
-    radius = 7
+    radius = 14
     canvas.create_oval(x - radius, y - radius, x + radius, y+radius, fill='black')
 
 def guessNumber():
@@ -29,7 +39,22 @@ def guessNumber():
         if coords:  
             draw.ellipse(coords, fill='black')
     image = image.resize((28, 28))
-    # TODO: Here you will guess and display the number
+    
+
+    data_matrix = convertToPixels(image.getdata())
+
+    data = np.array(data_matrix)
+
+    data = data.reshape(1, 28, 28, 1)
+
+    predicted_class = model.predict(data)
+    predicted_digit = np.argmax(predicted_class)
+    second_canvas.delete('all')
+    drawNumber(predicted_digit)
+
+    canvas.delete("all")
+    
+
 def drawNumber(number):
 
     # Draw the number on the canvas at coordinates (100, 100)

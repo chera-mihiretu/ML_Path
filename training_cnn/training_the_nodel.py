@@ -9,6 +9,7 @@ epochs = 10
 history = model.fit(x_train, y_train_bin, 
                     batch_size=batch_size,epochs=epochs, 
                     validation_data = (x_test, y_test_bin)) 
+model.save('digit_recognition_model.h5')
 
 # Step 3: Plot training & validation accuracy values
 plt.figure(figsize=(12, 5))
