@@ -39,42 +39,42 @@
 # 11. Future Work
  - Considered enhancements for the model, such as integrating additional datasets or exploring advanced techniques for improved accuracy.
 
+# 11. How to Run The Projet 
 
-
-# To Learn Machine Learning I Did This
+### Install Necessary modules.
 ```bash
-pip install numpy pandas
+# for processing the array easily 
+pip install numpy
+# Visual of the arrays in table form
+pip install pandas
+# for training the model
+pip install tensorflow
+# for visualization
+pip install matplotlib
 ```
-Then Import Them
-```python
-import numpy as np
-import panda as pd
+
+### Then navigate to [This Folder](tkinter/)
+```bash
+python App.py
 ```
-
-After that I Learned the basics of numpy and pandas
-
-
-- [Array Creation](numpy/array_basics.py)
-- [Array Indexing and Slicing](numpy/2dArray.py)
-- [Array Operations](numpy/numpyoperation.py)
-- [Universal Functions (ufuncs)](numpy/numpyoperation.py)
-- [Statistical Functions](numpy/array_functions.py)
-- [Linear Algebra](numpy/numpyoperation.py)
-- [Random Number Generation](numpy/array_basics.py)
-- [Reshaping and Resizing Arrays](numpy/array_reshaping.py)
-- [File Input/Output](numpy/numpyio.py)
-- [Masked Arrays]()
-- [Structured Arrays]()
-- [Data Types](numpy/)
-- [Array Broadcasting](numpy/broadcasting.py)
-- [Fancy Indexing]()
+# Demo
+## Training Data
+![](demo/Screenshot%20from%202024-10-04%2015-13-22.png)
+## Result Data
+![](demo/Screenshot%20from%202024-10-04%2008-00-38.png)
+![](demo/Screenshot%20from%202024-10-04%2008-00-52.png)
+![](demo/Screenshot%20from%202024-10-04%2008-01-05.png)
+![](demo/Screenshot%20from%202024-10-04%2008-01-26.png)
+![](demo/Screenshot%20from%202024-10-04%2015-10-46.png)
+![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
+![](demo/Screenshot%20from%202024-10-04%2015-10-46.png)
 
 
 # Digit Recognition using Machine Learning
 
 ## Project Overview
 
-This project focuses on building a digit recognition system using Machine Learning techniques. The system is trained to recognize hand-written digits from 0 to 9 using the **MNIST** dataset available on **Kaggle**.
+This project focuses on building a digit recognition system using Machine Learning techniques. The system is trained to recognize hand-written digits from 0 to 9 using the **MNIST** 
 
 ## Features
 
@@ -86,23 +86,8 @@ This project focuses on building a digit recognition system using Machine Learni
 ## Technologies Used
 
 - Python
-- Scikit-learn
+- tensorflow
 - Numpy
 - Pandas
 - Matplotlib
-- Kaggle
-
-## Getting Started
-
-### Prerequisites
-
-To run this project, you need to install the following libraries:
-
-```bash
-pip install scikit-learn numpy pandas matplotlib kaggle
-```
-
-You can find the dataset here
-Kaggle Data: [https://www.kaggle.com/c/digit-recognizer/data](https://www.kaggle.com/c/digit-recognizer/data)
-
 
