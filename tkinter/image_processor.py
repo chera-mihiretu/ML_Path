@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
-
+import cv2
 
 
 class ImageProcessor:
-    def openCamer(self):
+    def openCamera(self):
         pass
 
     def uploadImage(self):

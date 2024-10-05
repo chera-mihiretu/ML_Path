@@ -1,7 +1,7 @@
 # Machine Learning Project Path for Digit Recognition
 
 ![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
-
+#### [Demo Video]()
 # 1. Introduction to Machine Learning
  - Engaged with various resources to understand the basics of machine learning.
 
@@ -32,9 +32,13 @@
 # 8. GUI Development
  - Developed an interactive graphical user interface (GUI) using Tkinter for user interaction.
 
+
 # 9. Real-time Prediction
  - Implemented a feature that enables real-time digit recognition based on user input from the GUI.
-
+ - ##### [MultiThreading](https://docs.python.org/3/library/threading.html)
+    - Used Multithreading to predict the the number as the same time while the programming(GUI) is running with out being disurbed this will allow the model to do the prediction on another thread
+ - ##### [ThreadPool](https://superfastpython.com/threadpool-python/)
+    - Thread is needing since prediction is heavy operation it is not appropriate to create thread for every single call of motion of the mouse because the thread will continue running for a while even after the user is done drawing. 
 
 
 # 11. Future Work
