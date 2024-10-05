@@ -3,8 +3,10 @@ from PIL import Image, ImageDraw
 from PIL_tutor.main import convertToPixels
 import numpy as np
 from model_setup import *
-from concurrent.futures import ThreadPoolExecutor
+import threading 
 from image_processor import *
+from concurrent.futures import ThreadPoolExecutor
+from collections import deque
 MAIN_CANVA_SIZE = (400,400)
 PAINT_RADIUS = 14
 
@@ -21,7 +23,10 @@ class MyApplication(tk.Tk):
         
         self.frame_refresh = 0
         self.image_processor = ImageProcessor()
-        self.main_canva.bind("<ButtonRelease-1>", self.predictNumberMouseRelease)
+        #self.main_canva.bind("<ButtonRelease-1>", self.stopThePool)
+        self.my_thread_pool = ThreadPoolExecutor(max_workers=2)
+        self.on_going_task = deque()
+
 
     def uploadImage(self):
         try:
@@ -83,12 +88,13 @@ class MyApplication(tk.Tk):
         self.percent_label.pack()
 
 
+
     def drawDigit(self, event):
         x, y = event.x, event.y
 
         radius = PAINT_RADIUS
         self.main_canva.create_oval(x - radius, y - radius, x + radius, y+radius, fill='black')
-        
+        self.realTimePrediction()
         
 
     def getTheMatrixFromCanvas(self):
@@ -124,8 +130,9 @@ class MyApplication(tk.Tk):
     def predictNumber(self):
         result = self.getTheMatrixFromCanvas()
         self.setPredictionByMatrix(result)
-    def predictNumberMouseRelease(self, event):
-        self.predictNumber()
+
+
+    
 
     def setPredictionByMatrix(self, result):
         value, percent = self.model.predictNumber(result)
@@ -138,7 +145,14 @@ class MyApplication(tk.Tk):
     def clear(self):
         self.main_canva.delete('all')
 
+    def realTimePrediction(self):
+        if self.on_going_task and self.on_going_task[0].done():
+            self.on_going_task.popleft()
+        if len(self.on_going_task) < 2:
+            self.on_going_task.append(self.my_thread_pool.submit(self.predictNumber))
+    
 
+    
 
 
     

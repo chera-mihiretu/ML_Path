@@ -3,6 +3,7 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 
 
+
 class ImageProcessor:
     def openCamer(self):
         pass
