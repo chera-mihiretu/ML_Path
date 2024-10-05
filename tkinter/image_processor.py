@@ -21,7 +21,7 @@ class ImageProcessor:
             frame = cv2.flip(frame, 1)
             frame_copy = frame.copy()  
 
-            needed_box = (200,200)
+            needed_box = (400,400)
 
             needed_box_pos = ((int(self.width//2 - needed_box[0]//2), 
                                int(self.height)//2 - needed_box[1]//2)),\
@@ -29,14 +29,16 @@ class ImageProcessor:
                                int(self.height)//2 + needed_box[1]//2)
             
             cropped_image = frame[needed_box_pos[0][1]:needed_box_pos[1][1], needed_box_pos[0][0]:needed_box_pos[1][0]]
+            cropped_image = cv2.flip(cropped_image, 1)
             image_gray = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
+           
             cv2.imshow('Cropped', image_gray)
             
             cv2.imshow('Input', frame_copy)  
             count += 1
             
-            if count > 50:
-                cropped_image = cv2.flip(cropped_image, 1)
+            if count > 10:
+                
                 count = 0
                 
                 yield cropped_image

@@ -166,6 +166,7 @@ class MyApplication(tk.Tk):
     def startCamera(self):
         for image in self.image_processor.openCamera():
             image = Image.fromarray(image)
+            image.save('photo_01.png')
             self.realTimePrediction(image)
             
     
