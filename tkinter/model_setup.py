@@ -22,4 +22,5 @@ class MyModel:
             predicted_class = self.model.predict(data)
             predicted_digit = np.argmax(predicted_class)
             confidence = np.max(predicted_class[0]) * 100 
+            
             return [predicted_digit, confidence ]

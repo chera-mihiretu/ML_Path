@@ -44,12 +44,15 @@ class MyApplication(tk.Tk):
             self.main_canva.update()
 
 
-            result = self.getTheMatrixFromImage(image)
-
-            self.setPredictionByMatrix(result)
+            self.predictFromImage(image)
             
         except FileExistsError as e:
             print
+    def predictFromImage(self, image):
+        
+        result = self.getTheMatrixFromImage(image)
+
+        self.setPredictionByMatrix(result)
 
     def setUpCanvas(self):
         #! Adding The Canvas
@@ -136,8 +139,9 @@ class MyApplication(tk.Tk):
 
     def setPredictionByMatrix(self, result):
         value, percent = self.model.predictNumber(result)
-
+        print(value, percent)
         self.second_canva.delete('all')
+        
         self.drawPredictedNumberAndPrediction(value, percent)
         
 
@@ -145,14 +149,25 @@ class MyApplication(tk.Tk):
     def clear(self):
         self.main_canva.delete('all')
 
-    def realTimePrediction(self):
+    def realTimePrediction(self, image = []):
         if self.on_going_task and self.on_going_task[0].done():
             self.on_going_task.popleft()
+        print(self.on_going_task)
         if len(self.on_going_task) < 2:
-            self.on_going_task.append(self.my_thread_pool.submit(self.predictNumber))
-    
+            if not image:
+                self.on_going_task.append(self.my_thread_pool.submit(self.predictNumber))
+            else:
+                
+                self.on_going_task.append(self.my_thread_pool.submit(self.predictFromImage, image))
     def cameraUse(self):
-        self.image_processor.openCamera()
+        thread = threading.Thread(target=self.startCamera)
+        thread.start()
+        
+    def startCamera(self):
+        for image in self.image_processor.openCamera():
+            image = Image.fromarray(image)
+            self.realTimePrediction(image)
+            
     
 
 

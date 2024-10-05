@@ -7,11 +7,12 @@ import cv2
 class ImageProcessor:
     def __init__(self):
         self.esc_key = 27
+       
+    def openCamera(self):
         self.camera_obj = cv2.VideoCapture(0)
         self.width = self.camera_obj.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.camera_obj.get(cv2.CAP_PROP_FRAME_HEIGHT)
-    def openCamera(self):
-        
+        count = 0
         while True:
             ret, frame = self.camera_obj.read()  
             if not ret:  
@@ -26,18 +27,26 @@ class ImageProcessor:
                                int(self.height)//2 - needed_box[1]//2)),\
                                (int(self.width)//2 + needed_box[0]//2,
                                int(self.height)//2 + needed_box[1]//2)
-            print(needed_box_pos)
             
             cropped_image = frame[needed_box_pos[0][1]:needed_box_pos[1][1], needed_box_pos[0][0]:needed_box_pos[1][0]]
             image_gray = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
-            
             cv2.imshow('Cropped', image_gray)
             
             cv2.imshow('Input', frame_copy)  
-
+            count += 1
+            
+            if count > 50:
+                cropped_image = cv2.flip(cropped_image, 1)
+                count = 0
+                
+                yield cropped_image
+                
+            
             
             if cv2.waitKey(1) & 0xFF == self.esc_key:  
                 break
+
+
         
         cv2.destroyAllWindows()
 
@@ -56,6 +65,6 @@ class ImageProcessor:
             raise FileExistsError('There is something wrong with the file')
 
 
-if __name__ == '__main__':
-    app = ImageProcessor()
-    app.openCamera()
+# if __name__ == '__main__':
+#     app = ImageProcessor()
+#     app.openCamera()
