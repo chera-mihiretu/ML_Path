@@ -1,8 +1,9 @@
 # Machine Learning Project Path for Digit Recognition
 
+![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
+
 # 1. Introduction to Machine Learning
  - Engaged with various resources to understand the basics of machine learning.
- - Completed introductory courses on platforms like Coursera, edX, or Udacity.
 
 # 2. Environment Setup
  - Installed Python and necessary libraries like TensorFlow and Keras to create and train the model.
@@ -60,16 +61,15 @@ python App.py
 # Demo
 ## Training Data
 ![](demo/Screenshot%20from%202024-10-04%2015-13-22.png)
-## Result Data
+
+## More Demo
 ![](demo/Screenshot%20from%202024-10-04%2008-00-38.png)
 ![](demo/Screenshot%20from%202024-10-04%2008-00-52.png)
 ![](demo/Screenshot%20from%202024-10-04%2008-01-05.png)
 ![](demo/Screenshot%20from%202024-10-04%2008-01-26.png)
 ![](demo/Screenshot%20from%202024-10-04%2015-10-46.png)
-![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
+
 ![](demo/Screenshot%20from%202024-10-04%2015-10-46.png)
-
-
 # Digit Recognition using Machine Learning
 
 ## Project Overview
