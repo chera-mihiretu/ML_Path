@@ -61,7 +61,7 @@ class MyApplication(tk.Tk):
 
         self.frameOfButtons = tk.Frame(self)
         self.clearCanvas = tk.Button(self.frameOfButtons, text='Clear', bg='blue', fg='white', command=self.clear)
-        self.useCamer = tk.Button(self.frameOfButtons, text='Use Camera', bg='blue', fg='white')
+        self.useCamer = tk.Button(self.frameOfButtons, text='Use Camera', bg='blue', fg='white', command=self.cameraUse)
         self.uploadImage = tk.Button(self.frameOfButtons, text='Upload Image', bg='blue', fg='white', command=self.uploadImage)
         
 
@@ -151,7 +151,8 @@ class MyApplication(tk.Tk):
         if len(self.on_going_task) < 2:
             self.on_going_task.append(self.my_thread_pool.submit(self.predictNumber))
     
-
+    def cameraUse(self):
+        self.image_processor.openCamera()
     
 
 
