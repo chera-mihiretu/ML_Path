@@ -1,10 +1,11 @@
 # Machine Learning Project Path for Digit Recognition
 
-![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
-#### [Demo Video]()
+
+###### Demo Video
+![Demo Video](demo/freecompress-ML%20(1).gif) 
 # 1. Introduction to Machine Learning
  - Engaged with various resources to understand the basics of machine learning.
-
+![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
 # 2. Environment Setup
  - Installed Python and necessary libraries like TensorFlow and Keras to create and train the model.
 
