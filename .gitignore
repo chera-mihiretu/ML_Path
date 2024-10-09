@@ -1,2 +1,3 @@
 # this is ignored datasets because they are found on the kaggle link in readme
 digit-recognizer
+/test/image
