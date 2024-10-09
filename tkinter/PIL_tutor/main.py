@@ -4,7 +4,6 @@ from typing import *
 
 def convertToPixels(oneDimensionImagePixel:List[int], width:int=28, height:int=28, threshold:int=187) -> List[List[int]]:
     answer = [[0 for _ in range(width)] for __ in range(height)]
-    
     for row in range(width):
         for col in range(height):
             r,g,b,*a  = oneDimensionImagePixel[row * width + col]

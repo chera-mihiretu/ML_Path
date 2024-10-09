@@ -2,9 +2,6 @@ import os
 from typing import *
 from PIL import Image
 
-
-
-
 from tkinter.App import MyApplication
 
 curr_dir = os.getcwd()

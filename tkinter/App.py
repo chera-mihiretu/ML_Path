@@ -1,10 +1,10 @@
 import tkinter as tk
 from PIL import Image, ImageDraw
-from PIL_tutor.main import convertToPixels
+from ..tkinter.PIL_tutor.main import convertToPixels
 import numpy as np
-from model_setup import *
+from ..tkinter.model_setup import *
 import threading 
-from image_processor import *
+from ..tkinter.image_processor import *
 from concurrent.futures import ThreadPoolExecutor
 from collections import deque
 MAIN_CANVA_SIZE = (400,400)
@@ -51,7 +51,7 @@ class MyApplication(tk.Tk):
     def predictFromImage(self, image):
         
         result = self.getTheMatrixFromImage(image)
-
+        
         self.setPredictionByMatrix(result)
 
     def setUpCanvas(self):
