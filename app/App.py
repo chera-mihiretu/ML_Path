@@ -1,10 +1,10 @@
 import tkinter as tk
 from PIL import Image, ImageDraw
-from ..tkinter.PIL_tutor.main import convertToPixels
+from app.PIL_tutor import convertToPixels
 import numpy as np
-from ..tkinter.model_setup import *
+from app.model_setup import *
 import threading 
-from ..tkinter.image_processor import *
+from app.image_processor import *
 from concurrent.futures import ThreadPoolExecutor
 from collections import deque
 MAIN_CANVA_SIZE = (400,400)
@@ -114,7 +114,7 @@ class MyApplication(tk.Tk):
         return self.requiredData(image)
     def getTheMatrixFromImage(self, image):
         image = image.resize((28, 28))
-        
+        image.save('img.png')
         return self.requiredData(image)
     def requiredData(self, image):
         data_matrix = convertToPixels(image.getdata())

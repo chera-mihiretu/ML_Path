@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from PIL import Image, ImageDraw
-from ..tkinter.PIL_tutor.main import convertToPixels
+from ..app.PIL_tutor.main import convertToPixels
 import numpy as np
 from tensorflow.keras.models import load_model
 
