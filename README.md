@@ -6,7 +6,6 @@
 # 1. Introduction to Machine Learning
  - Engaged with various resources to understand the basics of machine learning.
 ![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
-![](demo/Screenshot%20from%202024-10-04%2015-11-12.png)
 # 2. Environment Setup
  - Installed Python and necessary libraries like TensorFlow and Keras to create and train the model.
 
@@ -70,8 +69,6 @@ python App.py
 
 ## More Demo
 ![](demo/Screenshot%20from%202024-10-04%2008-00-38.png)
-![](demo/Screenshot%20from%202024-10-04%2008-00-52.png)
-![](demo/Screenshot%20from%202024-10-04%2008-01-05.png)
 ![](demo/Screenshot%20from%202024-10-04%2008-01-26.png)
 ![](demo/Screenshot%20from%202024-10-04%2015-10-46.png)
 
@@ -96,4 +93,63 @@ This project focuses on building a digit recognition system using Machine Learni
 - Numpy
 - Pandas
 - Matplotlib
+
+### File Structure Along with description
+```bash
+ML_Path
+├── .gitignore                        # Git ignore file for version control
+├── DigitPrediction.ipynb            # Model training code written on Google Colab
+├── ModelTraining1.ipynb              # Model training code written on Google Colab
+├── NumberRec.ipynb                  # Model training code written on Google Colab
+├── README.md                         # Project overview and documentation
+├── __init__.py                      # Initialization file for the package
+├── first_ml                          # Folder containing the first machine learning project
+│   └── main.py                      # Main script for the first ML project
+├── multithreading                    # Basics of multithreading
+│   └── main.py                      # Main script demonstrating multithreading concepts
+├── numpy                             # Basics of NumPy
+│   ├── 2dArray.py                   # 2D array operations in NumPy
+│   ├── aray.npy                     # Example NumPy array file
+│   ├── array.npz                    # Compressed NumPy array file
+│   ├── array.txt                    # Text file containing array data
+│   ├── array_basics.py              # Basic operations and examples in NumPy
+│   ├── array_functions.py            # Functions for manipulating NumPy arrays
+│   ├── array_reshaping.py            # Reshaping arrays in NumPy
+│   ├── broadcasting.py               # Broadcasting concepts in NumPy
+│   ├── missing_data.py               # Handling missing data in NumPy
+│   ├── nparray.py                   # Additional NumPy array examples
+│   ├── numpyio.py                   # Input/output operations with NumPy
+│   ├── numpyoperation.py             # Various operations in NumPy
+│   └── stacking_arrays.py            # Stacking multiple arrays in NumPy
+├── pandas                            # Basics of Pandas
+│   ├── data.csv                      # Sample data file in CSV format
+│   ├── pandas_basics.py              # Basic operations and examples in Pandas
+│   └── reading_file.py               # Script for reading files using Pandas
+├── PIL_tutor                         # Basics in image processing
+│   ├── main.py                      # Main script for image processing tutorials
+│   └── test.png                     # Sample image for processing
+├── test                               # Tests written to check the accuracy of the model
+│   ├── .gitignore                    # Git ignore file for test folder
+│   ├── __init__.py                  # Initialization file for the test package
+│   ├── photo_generator.py            # Script for generating test images
+│   └── test_average_prediction.py    # Script for testing average predictions
+├── training_cnn                      # Codes for modeling and trained model files
+│   ├── arranging_data.py             # Script for arranging training data
+│   ├── digit_recognition_model.h5    # Trained digit recognition model file
+│   ├── digit_recognition_model_01.h5  # Alternate trained model file
+│   ├── digit_recognition_model_02.h5  # Another alternate trained model file
+│   ├── load_kaggle_data.py           # Script for loading Kaggle data
+│   ├── main.py                      # Main script for training the CNN model
+│   ├── model_building.py             # Script for building the CNN model
+│   ├── test.csv                      # Test dataset in CSV format
+│   └── train.csv                     # Training dataset in CSV format
+├── app                                # Contains user interface, model prediction, and GUI implemented with OOP
+│   ├── image_processor.py             # Script for processing images in the app
+│   ├── model_setup.py                 # Script for setting up the model in the app
+│   ├── App.py                        # Main application script for the GUI
+│   ├── __init__.py                   # Initialization file for the app package
+│   └── main.py                       # Main entry point for the app
+└── folder_structure.py               # Script to display the folder structure
+
+```
 

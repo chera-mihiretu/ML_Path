@@ -1,8 +1,7 @@
 import os
 
 def print_directory_tree(startpath, indent_level=0, include_first_level=None, exclude_folders=None):
-    if include_first_level is None:
-        include_first_level = {'app', 'test'}  # Include only these in the first iteration
+ # Include only these in the first iteration
     
     if exclude_folders is None:
         exclude_folders = {'.git', '__pycache__', 'image'}  # Exclude these folders in all iterations
@@ -12,9 +11,6 @@ def print_directory_tree(startpath, indent_level=0, include_first_level=None, ex
     
     with os.scandir(startpath) as entries:
         for entry in entries:
-            # First iteration: only include `path_a` and `path_b`
-            if indent_level == 0 and entry.name not in include_first_level:
-                continue
             
             # Skip excluded folders
             if entry.is_dir(follow_symlinks=False) and entry.name not in exclude_folders:
