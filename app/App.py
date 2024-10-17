@@ -152,7 +152,7 @@ class MyApplication(tk.Tk):
     def realTimePrediction(self, image = []):
         if self.on_going_task and self.on_going_task[0].done():
             self.on_going_task.popleft()
-        print(self.on_going_task)
+        
         if len(self.on_going_task) < 2:
             if not image:
                 self.on_going_task.append(self.my_thread_pool.submit(self.predictNumber))
@@ -166,7 +166,6 @@ class MyApplication(tk.Tk):
     def startCamera(self):
         for image in self.image_processor.openCamera():
             image = Image.fromarray(image)
-            image.save('photo_01.png')
             self.realTimePrediction(image)
             
     

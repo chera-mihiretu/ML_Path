@@ -59,9 +59,10 @@ pip install tensorflow
 pip install matplotlib
 ```
 
-### Then navigate to [This Folder](tkinter/)
+### Then navigate to [This Folder](ML_Path/)
 ```bash
-python App.py
+cd ML_Path
+python app.App.py
 ```
 # Demo
 ## Training Data
