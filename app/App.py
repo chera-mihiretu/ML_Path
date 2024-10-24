@@ -9,10 +9,14 @@ from concurrent.futures import ThreadPoolExecutor
 from collections import deque
 MAIN_CANVA_SIZE = (400,400)
 PAINT_RADIUS = 14
+from app.water_shade import SeparateImages
+from matplotlib import pyplot as plt
 
 class MyApplication(tk.Tk):
     def __init__(self, title):
         super().__init__()  
+        self.multi_digit = False
+        self.splitter = SeparateImages()
         self.title(title)
         
         self.setUpCanvas()
@@ -31,7 +35,9 @@ class MyApplication(tk.Tk):
     def uploadImage(self):
         try:
             image = self.image_processor.uploadImage()  # Assume this returns a PIL Image object
-            photo = ImageTk.PhotoImage(image)
+            pil_image = self.image_processor.toPilImage(image)
+            pil_image = pil_image.resize((400,400))
+            photo = ImageTk.PhotoImage(pil_image)
 
             # Store a reference to avoid garbage collection
             self.photo_reference = photo  
@@ -44,15 +50,32 @@ class MyApplication(tk.Tk):
             self.main_canva.update()
 
 
-            self.predictFromImage(image)
+            value,percent = None, None
+            if self.multi_digit:
+                value, percent = self.multiDigit(image)
+            else:
+                value, percent = self.predictFromImage(image)
+            self.drawValueAndPercent(value, percent)
             
         except FileExistsError as e:
             print
+
+    # This is for predicting from image
     def predictFromImage(self, image):
         
         result = self.getTheMatrixFromImage(image)
+        return self.setPredictionByMatrix(result)
+
+    # toggle multi digit 
+    def toggle(self):
+        # Toggle the state between ON and OFF
+        self.multi_digit = not self.multi_digit
         
-        self.setPredictionByMatrix(result)
+        if self.multi_digit:
+            self.toggle_button.config(text="ON", bg="green")
+        else:
+            self.toggle_button.config(text="OFF", bg="red")
+        
 
     def setUpCanvas(self):
         #! Adding The Canvas
@@ -72,7 +95,8 @@ class MyApplication(tk.Tk):
         self.info = tk.Label(self, text="Here You will see guessed number!", font=("Arial", 12), fg="black",)
         # Label for percentage
         self.percent_label = tk.Label(self, text="", font=("Arial", 14), fg="black")
-        
+        # Toggle button 
+        self.toggle_button = tk.Button(self, text="OFF", command=self.toggle, bg="red")
 
 
         #! Ordering the Olacement
@@ -85,12 +109,18 @@ class MyApplication(tk.Tk):
         self.clearCanvas.pack(padx=10, pady=10, side=tk.LEFT)
         self.useCamer.pack(padx=10, pady=10, side=tk.RIGHT)
         self.frameOfButtons.pack()
-        self.second_canva.pack()
+        # toggle button title
+        self.status_label = tk.Label(self, text="Set Multi Digit Recgonition", font=("Arial", 14))
+        self.status_label.pack(padx=20)
+
+        self.toggle_button.pack(padx=20)
+        self.second_canva.pack(pady=10)
 
         self.info.pack(pady=10)
         self.percent_label.pack()
 
 
+    # drawing the image
 
     def drawDigit(self, event):
         x, y = event.x, event.y
@@ -100,6 +130,7 @@ class MyApplication(tk.Tk):
         self.realTimePrediction()
         
 
+    # get tuhe image from the canvas
     def getTheMatrixFromCanvas(self):
         image = Image.new("RGB", (MAIN_CANVA_SIZE[0], MAIN_CANVA_SIZE[1]), "white")
         draw = ImageDraw.Draw(image)
@@ -112,10 +143,15 @@ class MyApplication(tk.Tk):
         image = image.resize((28, 28))
         
         return self.requiredData(image)
+    
+    # this is to get the matrix format by 28x28 from the image passed as an argument then fed into 
+    # Predict by image
     def getTheMatrixFromImage(self, image):
         image = image.resize((28, 28))
-        image.save('img.png')
         return self.requiredData(image)
+    
+
+    # Convert the image into gray and 28 x 28 image this is needed data
     def requiredData(self, image):
         data_matrix = convertToPixels(image.getdata())
 
@@ -126,31 +162,50 @@ class MyApplication(tk.Tk):
 
         return final_data
     
+
+    # This function is called by the drawValueAndPercent function
     def drawPredictedNumberAndPrediction(self, number, percent):
-        self.second_canva.create_text(100, 100, text=number, font=("Helvetica", 48), fill="black")
+        
+        self.second_canva.create_text(100, 100, text=number, font=("Helvetica", 30), fill="black")
         self.percent_label.config(text=f"Predicted Digit: {number} with Confidence: {percent:.2f}%")
         
+    
+    # This is the one that get the image from the canvas and feed it the model
     def predictNumber(self):
+        
         result = self.getTheMatrixFromCanvas()
-        self.setPredictionByMatrix(result)
+        value = percent = None
+        if self.multi_digit:
+            value, percent = self.multiDigit(result)
+        else:
+            value, percent = self.setPredictionByMatrix(result)
+
+        self.drawValueAndPercent(value, percent)
 
 
     
-
+    # This predixt the image by sending the image of 28x28 to the model
     def setPredictionByMatrix(self, result):
         value, percent = self.model.predictNumber(result)
-        print(value, percent)
-        self.second_canva.delete('all')
         
-        self.drawPredictedNumberAndPrediction(value, percent)
+        return (value, percent)
+        
         
 
 
+    # Clear the Canvas
     def clear(self):
         self.main_canva.delete('all')
 
+
+    # Real time prediction uses Thread pool and deque
+    # The thread pool only accepts if the current running thread is less than two
+    # other wise it will not place on the thread pool waiting list
     def realTimePrediction(self, image = []):
+        
+        
         if self.on_going_task and self.on_going_task[0].done():
+            
             self.on_going_task.popleft()
         
         if len(self.on_going_task) < 2:
@@ -159,17 +214,57 @@ class MyApplication(tk.Tk):
             else:
                 
                 self.on_going_task.append(self.my_thread_pool.submit(self.predictFromImage, image))
+
+
+    # This is the thread in which the camera runs
     def cameraUse(self):
         thread = threading.Thread(target=self.startCamera)
         thread.start()
         
+
+
+    # Start the camera 
+    # It is stream like function while the called self.image_processor.operCamera is not completed
+    # but it still will return the value without terminating the called function 
     def startCamera(self):
         for image in self.image_processor.openCamera():
             image = Image.fromarray(image)
             self.realTimePrediction(image)
+
+            
+
             
     
+    # multiple image extracter 
+    # Extracts multiple numbers from the same image and feed it to the model
+    def multiDigit(self, image):
+        digits = self.splitter.splitNumbers(image)
+        total = 0
+        av_percent = 0
+        count = 0
+        for i in digits:
 
+            
+            my_image = self.image_processor.toPilImage(i)
+            add_padding = self.image_processor.addWhitePadding(my_image)
+            value, percent = self.predictFromImage(add_padding)
+
+            total *= 10
+            total += value
+            av_percent += percent
+            count += 1
+        percent = av_percent / count
+        return (total, percent)
+            
+
+
+
+
+
+    # draw the image on the canvas
+    def drawValueAndPercent(self, value, percent):
+        self.second_canva.delete('all')
+        self.drawPredictedNumberAndPrediction(value, percent)
 
     
 

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageOps
 import cv2
 
 
@@ -59,13 +59,26 @@ class ImageProcessor:
             if file_path.split('.')[-1] not in {'png', 'jpg'}:
                 raise FileExistsError('Not and Image')
             else:
-                image = Image.open(file_path)
-                image = image.resize((400, 400))  
+                image = cv2.imread(file_path)
+                
                 
                 return image
         else:
             raise FileExistsError('There is something wrong with the file')
+        
+    def addWhitePadding(self, image):
+        padding = 50
+        image_with_padding = ImageOps.expand(image, border=padding, fill='white')
+        copy_image = image_with_padding.copy()
+        return copy_image
+    def toPilImage(self, image):
+        opencv_image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
+        # Convert the NumPy array (OpenCV image) to a PIL image
+        pil_image = Image.fromarray(opencv_image_rgb)
+
+        return pil_image
+    
 
 # if __name__ == '__main__':
 #     app = ImageProcessor()
